@@ -623,14 +623,6 @@ class FontProperties(object):
                  size   = None,
                  fname  = None,  # if set, it's a hardcoded filename to use
                  ):
-        self._family = _normalize_font_family(rcParams['font.family'])
-        self._slant = rcParams['font.style']
-        self._variant = rcParams['font.variant']
-        self._weight = rcParams['font.weight']
-        self._stretch = rcParams['font.stretch']
-        self._size = rcParams['font.size']
-        self._file = None
-
         if isinstance(family, str):
             # Treat family as a fontconfig pattern if it is the only
             # parameter provided.
@@ -640,6 +632,15 @@ class FontProperties(object):
                 stretch is None and
                 size is None and
                 fname is None):
+
+                self._family = _normalize_font_family(rcParams['font.family'])
+                self._slant = rcParams['font.style']
+                self._variant = rcParams['font.variant']
+                self._weight = rcParams['font.weight']
+                self._stretch = rcParams['font.stretch']
+                self._size = rcParams['font.size']
+                self._file = None
+
                 self.set_fontconfig_pattern(family)
                 return
 
