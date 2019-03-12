@@ -1939,8 +1939,6 @@ class Affine2D(Affine2DBase):
         calls to :meth:`rotate`, :meth:`rotate_deg`, :meth:`translate`
         and :meth:`scale`.
         """
-        if degrees == 0:
-            return self
         return self.rotate(np.deg2rad(degrees))
 
     def rotate_around(self, x, y, theta):
@@ -1951,8 +1949,6 @@ class Affine2D(Affine2DBase):
         calls to :meth:`rotate`, :meth:`rotate_deg`, :meth:`translate`
         and :meth:`scale`.
         """
-        if theta == 0:
-            return self
         return self.translate(-x, -y).rotate(theta).translate(x, y)
 
     def rotate_deg_around(self, x, y, degrees):
@@ -1963,8 +1959,6 @@ class Affine2D(Affine2DBase):
         calls to :meth:`rotate`, :meth:`rotate_deg`, :meth:`translate`
         and :meth:`scale`.
         """
-        if degrees == 0:
-            return self
         # Cast to float to avoid wraparound issues with uint8's
         x, y = float(x), float(y)
         return self.translate(-x, -y).rotate_deg(degrees).translate(x, y)
@@ -1977,6 +1971,9 @@ class Affine2D(Affine2DBase):
         calls to :meth:`rotate`, :meth:`rotate_deg`, :meth:`translate`
         and :meth:`scale`.
         """
+        if tx == 0 and ty == 0:
+            return self
+
         translate_mtx = np.array(
             [[1.0, 0.0, tx], [0.0, 1.0, ty], [0.0, 0.0, 1.0]], float)
         self._mtx = np.dot(translate_mtx, self._mtx)
@@ -1996,6 +1993,9 @@ class Affine2D(Affine2DBase):
         """
         if sy is None:
             sy = sx
+        if sx == 1 and sy == 1:
+            return self
+
         scale_mtx = np.array(
             [[sx, 0.0, 0.0], [0.0, sy, 0.0], [0.0, 0.0, 1.0]], float)
         self._mtx = np.dot(scale_mtx, self._mtx)
