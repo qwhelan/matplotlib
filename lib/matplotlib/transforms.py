@@ -1921,6 +1921,8 @@ class Affine2D(Affine2DBase):
         calls to :meth:`rotate`, :meth:`rotate_deg`, :meth:`translate`
         and :meth:`scale`.
         """
+        if theta == 0:
+            return self
         a = np.cos(theta)
         b = np.sin(theta)
         rotate_mtx = np.array([[a, -b, 0.0], [b, a, 0.0], [0.0, 0.0, 1.0]],
@@ -1937,6 +1939,8 @@ class Affine2D(Affine2DBase):
         calls to :meth:`rotate`, :meth:`rotate_deg`, :meth:`translate`
         and :meth:`scale`.
         """
+        if degrees == 0:
+            return self
         return self.rotate(np.deg2rad(degrees))
 
     def rotate_around(self, x, y, theta):
@@ -1947,6 +1951,8 @@ class Affine2D(Affine2DBase):
         calls to :meth:`rotate`, :meth:`rotate_deg`, :meth:`translate`
         and :meth:`scale`.
         """
+        if theta == 0:
+            return self
         return self.translate(-x, -y).rotate(theta).translate(x, y)
 
     def rotate_deg_around(self, x, y, degrees):
@@ -1957,6 +1963,8 @@ class Affine2D(Affine2DBase):
         calls to :meth:`rotate`, :meth:`rotate_deg`, :meth:`translate`
         and :meth:`scale`.
         """
+        if degrees == 0:
+            return self
         # Cast to float to avoid wraparound issues with uint8's
         x, y = float(x), float(y)
         return self.translate(-x, -y).rotate_deg(degrees).translate(x, y)
