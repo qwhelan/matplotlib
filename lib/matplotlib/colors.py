@@ -114,7 +114,7 @@ def _sanitize_extrema(ex):
 
 def _is_nth_color(c):
     """Return whether *c* can be interpreted as an item in the color cycle."""
-    return isinstance(c, str) and re.match(r"\AC[0-9]+\Z", c)
+    return isinstance(c, str) and nthColorPattern.match(c)
 
 
 def is_color_like(c):
@@ -310,6 +310,7 @@ def to_hex(c, keep_alpha=False):
 
 cnames = CSS4_COLORS
 hexColorPattern = re.compile(r"\A#[a-fA-F0-9]{6}\Z")
+nthColorPattern = re.compile(r"\AC[0-9]+\Z")
 rgb2hex = to_hex
 hex2color = to_rgb
 
